@@ -77,15 +77,15 @@ inputs:
       is_sensitive: false
   - client_id: ""
     opts:
-      title: "Client ID of GitHub App"
-      summary: ""
+      title: "Client ID"
+      summary: "Client ID of GitHub App"
       description: ""
       is_expand: true
       is_required: true
       is_sensitive: true
   - private_key:
-      title: "Private key of GitHub App"
-      summary: ""
+      title: "Private key"
+      summary: "Private key of GitHub App"
       description: ""
       is_expand: true
       is_required: true
