@@ -65,26 +65,33 @@ toolkit:
   bash:
     entry_file: step.sh
 
-
 inputs:
-  - example_step_input: Default Value - you can leave this empty if you want to
+  - github_repository:
     opts:
-      title: "Example Step Input"
-      summary: Summary. No more than 2-3 sentences.
-      description: |
-        Description of this input.
-
-        Can be Markdown formatted text.
+      title: "GitHub repository name"
+      summary: ""
+      description: ""
       is_expand: true
       is_required: true
-      value_options: []
+      is_sensitive: false
+  - client_id:
+    opts:
+      title: "Client ID"
+      summary: "Client ID of GitHub App"
+      description: ""
+      is_expand: true
+      is_required: true
+      is_sensitive: true
+  - private_key_path:
+      title: "Private key path"
+      summary: " Path for private key of GitHub App"
+      description: "Please download private key before running this step"
+      is_expand: true
+      is_required: true
+      is_sensitive: false
 
 outputs:
-  - EXAMPLE_STEP_OUTPUT:
+  - GITHUB_APP_TOKEN:
     opts:
-      title: "Example Step Output"
-      summary: Summary. No more than 2-3 sentences.
-      description: |
-        Description of this output.
-
-        Can be Markdown formatted text.
+      title: "Token"
+      summary: "Token for a GitHub App"
