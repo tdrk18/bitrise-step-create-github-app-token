@@ -39,4 +39,4 @@ token="$(curl --location --silent --request POST \
   | jq -r '.token'
 )"
 
-envman add --key GITHUB_APP_TOKEN --value ${token}
+envman add --key GITHUB_APP_TOKEN --value ${token} --sensitive
