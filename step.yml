@@ -65,9 +65,8 @@ toolkit:
   bash:
     entry_file: step.sh
 
-
 inputs:
-  - github_repository: ""
+  - github_repository:
     opts:
       title: "GitHub repository name"
       summary: ""
@@ -75,7 +74,7 @@ inputs:
       is_expand: true
       is_required: true
       is_sensitive: false
-  - client_id: ""
+  - client_id:
     opts:
       title: "Client ID"
       summary: "Client ID of GitHub App"
@@ -86,10 +85,10 @@ inputs:
   - private_key_path:
       title: "Private key path"
       summary: " Path for private key of GitHub App"
-      description: ""
+      description: "Please download private key before running this step"
       is_expand: true
       is_required: true
-      is_sensitive: true
+      is_sensitive: false
 
 outputs:
   - GITHUB_APP_TOKEN:
