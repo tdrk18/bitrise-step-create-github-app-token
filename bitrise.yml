@@ -89,9 +89,6 @@ workflows:
             bitrise share create --stepid "${BITRISE_STEP_ID}" --tag "${BITRISE_STEP_VERSION}" --git "${BITRISE_STEP_GIT_CLONE_URL}"
             bitrise share finish
 trigger_map:
-- pull_request_target_branch:
-    regex: '*'
-  pull_request_source_branch:
-    regex: '*'
+- pull_request_source_branch: "*"
   type: pull_request
   workflow: test
