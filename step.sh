@@ -1,22 +1,40 @@
 #!/bin/bash
 set -ex
 
-echo "This is the value specified for the input 'example_step_input': ${example_step_input}"
+base64_url() {
+  openssl enc -base64 -A | tr '+/' '-_' | tr -d '='
+}
 
-#
-# --- Export Environment Variables for other Steps:
-# You can export Environment Variables for other Steps with
-#  envman, which is automatically installed by `bitrise setup`.
-# A very simple example:
-envman add --key EXAMPLE_STEP_OUTPUT --value 'the value you want to share'
-# Envman can handle piped inputs, which is useful if the text you want to
-# share is complex and you don't want to deal with proper bash escaping:
-#  cat file_with_complex_input | envman add --KEY EXAMPLE_STEP_OUTPUT
-# You can find more usage examples on envman's GitHub page
-#  at: https://github.com/bitrise-io/envman
+sign() {
+  openssl dgst -binary -sha256 -sign <(echo -n "${PRIVATE_KEY}")
+}
 
-#
-# --- Exit codes:
-# The exit code of your Step is very important. If you return
-#  with a 0 exit code `bitrise` will register your Step as "successful".
-# Any non zero exit code will be registered as "failed" by `bitrise`.
+header="$(echo -n '{"alg":"RS256","typ":"JWT"}' | base64_url)"
+
+now="$(date '+%s')"
+iat="$((now - 60))"
+exp="$((now + (3 * 60)))"
+template='{"iss":"%s","iat":%s,"exp":%s}'
+payload="$(printf "${template}" "${CLIENT_ID}" "${iat}" "${exp}" | base64_url)"
+
+signature="$(echo -n "${header}.${payload}" | sign | base64_url)"
+
+jwt="${header}.${payload}.${signature}"
+
+installation_id="$(curl --location --silent --request GET \
+  --url "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/installation" \
+  --header "Accept: application/vnd.github+json" \
+  --header "X-GitHub-Api-Version: 2022-11-28" \
+  --header "Authorization: Bearer ${jwt}" \
+  | jq -r '.id'
+)"
+
+token="$(curl --location --silent --request POST \
+  --url "${GITHUB_API_URL}/app/installations/${installation_id}/access_tokens" \
+  --header "Accept: application/vnd.github+json" \
+  --header "X-GitHub-Api-Version: 2022-11-28" \
+  --header "Authorization: Bearer ${jwt}" \
+  | jq -r '.token'
+)"
+
+envman add --key GITHUB_API_TOKEN --value ${token}
