@@ -67,24 +67,32 @@ toolkit:
 
 
 inputs:
-  - example_step_input: Default Value - you can leave this empty if you want to
+  - github_repository: ""
     opts:
-      title: "Example Step Input"
-      summary: Summary. No more than 2-3 sentences.
-      description: |
-        Description of this input.
-
-        Can be Markdown formatted text.
+      title: "GitHub repository name"
+      summary: ""
+      description: ""
       is_expand: true
       is_required: true
-      value_options: []
+      is_sensitive: false
+  - client_id: ""
+    opts:
+      title: "Client ID of GitHub App"
+      summary: ""
+      description: ""
+      is_expand: true
+      is_required: true
+      is_sensitive: true
+  - private_key:
+      title: "Private key of GitHub App"
+      summary: ""
+      description: ""
+      is_expand: true
+      is_required: true
+      is_sensitive: true
 
 outputs:
-  - EXAMPLE_STEP_OUTPUT:
+  - GITHUB_APP_TOKEN:
     opts:
-      title: "Example Step Output"
-      summary: Summary. No more than 2-3 sentences.
-      description: |
-        Description of this output.
-
-        Can be Markdown formatted text.
+      title: "Token"
+      summary: "Token for a GitHub App"

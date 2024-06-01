@@ -6,8 +6,10 @@ base64_url() {
 }
 
 sign() {
-  openssl dgst -binary -sha256 -sign <(echo -n "${PRIVATE_KEY}")
+  openssl dgst -binary -sha256 -sign <(echo -n "${private_key}")
 }
+
+GITHUB_API_URL="https://api.github.com"
 
 header="$(echo -n '{"alg":"RS256","typ":"JWT"}' | base64_url)"
 
@@ -15,14 +17,14 @@ now="$(date '+%s')"
 iat="$((now - 60))"
 exp="$((now + (3 * 60)))"
 template='{"iss":"%s","iat":%s,"exp":%s}'
-payload="$(printf "${template}" "${CLIENT_ID}" "${iat}" "${exp}" | base64_url)"
+payload="$(printf "${template}" "${client_id}" "${iat}" "${exp}" | base64_url)"
 
 signature="$(echo -n "${header}.${payload}" | sign | base64_url)"
 
 jwt="${header}.${payload}.${signature}"
 
 installation_id="$(curl --location --silent --request GET \
-  --url "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/installation" \
+  --url "${GITHUB_API_URL}/repos/${github_repository}/installation" \
   --header "Accept: application/vnd.github+json" \
   --header "X-GitHub-Api-Version: 2022-11-28" \
   --header "Authorization: Bearer ${jwt}" \
@@ -37,4 +39,4 @@ token="$(curl --location --silent --request POST \
   | jq -r '.token'
 )"
 
-envman add --key GITHUB_API_TOKEN --value ${token}
+envman add --key GITHUB_APP_TOKEN --value ${token}
