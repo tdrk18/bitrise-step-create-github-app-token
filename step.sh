@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+set -eu
 
 base64_url() {
   openssl enc -base64 -A | tr '+/' '-_' | tr -d '='
