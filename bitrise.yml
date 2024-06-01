@@ -58,6 +58,10 @@ workflows:
     steps:
     - activate-ssh-key@4: {}
     - git-clone@8: {}
+    - file-downloader@1:
+        inputs:
+        - destination: private_key.pem
+        - source: $BITRISEIO_PRIVATE_KEY_URL
     - script:
         inputs:
         - content: |
@@ -85,7 +89,7 @@ workflows:
         run_if: true
         inputs:
         - client_id: $CLIENT_ID
-        - private_key: $PRIVATE_KEY 
+        - private_key_path: private_key.pem
         - github_repository: tdrk18/bitrise-step-create-github-app-token
     - script:
         inputs:

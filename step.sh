@@ -9,6 +9,8 @@ sign() {
   openssl dgst -binary -sha256 -sign <(echo -n "${private_key}")
 }
 
+private_key=$(cat ${private_key_path})
+
 GITHUB_API_URL="https://api.github.com"
 
 header="$(echo -n '{"alg":"RS256","typ":"JWT"}' | base64_url)"
