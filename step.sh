@@ -33,6 +33,8 @@ installation_id="$(curl --location --silent --request GET \
   | jq -r '.id'
 )"
 
+echo 'Fetched installation id'
+
 token="$(curl --location --silent --request POST \
   --url "${GITHUB_API_URL}/app/installations/${installation_id}/access_tokens" \
   --header "Accept: application/vnd.github+json" \
@@ -41,4 +43,8 @@ token="$(curl --location --silent --request POST \
   | jq -r '.token'
 )"
 
+echo 'Fetched token'
+
 envman add --key GITHUB_APP_TOKEN --value ${token} --sensitive
+
+echo 'Set token as GITHUB_APP_TOKEN'
