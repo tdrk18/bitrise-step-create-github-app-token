@@ -25,7 +25,7 @@ signature="$(echo -n "${header}.${payload}" | sign | base64_url)"
 
 jwt="${header}.${payload}.${signature}"
 
-installation_id="$(curl --location --silent --request GET \
+installation_id="$(curl --location --silent --show-error --request GET \
   --url "${GITHUB_API_URL}/repos/${github_repository}/installation" \
   --header "Accept: application/vnd.github+json" \
   --header "X-GitHub-Api-Version: 2022-11-28" \
@@ -33,7 +33,9 @@ installation_id="$(curl --location --silent --request GET \
   | jq -r '.id'
 )"
 
-token="$(curl --location --silent --request POST \
+echo 'Fetched installation id'
+
+token="$(curl --location --silent --show-error --request POST \
   --url "${GITHUB_API_URL}/app/installations/${installation_id}/access_tokens" \
   --header "Accept: application/vnd.github+json" \
   --header "X-GitHub-Api-Version: 2022-11-28" \
@@ -41,4 +43,8 @@ token="$(curl --location --silent --request POST \
   | jq -r '.token'
 )"
 
+echo 'Fetched token'
+
 envman add --key GITHUB_APP_TOKEN --value ${token} --sensitive
+
+echo 'Set token as GITHUB_APP_TOKEN'

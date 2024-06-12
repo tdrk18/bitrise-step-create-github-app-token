@@ -17,6 +17,9 @@ Step by step:
 1. Open up your Terminal / Command Line
 2. `git clone` the repository
 3. `cd` into the directory of the step (the one you just `git clone`d)
+4. Create a `_tmp` directory and store the `private_key.pem` for your GitHub app in it
+   * `mkdir _tmp`
+   * `cp your_github_app_private_key.pem _tmp/`
 5. Create a `.bitrise.secrets.yml` file in the same directory of `bitrise.yml`
    (the `.bitrise.secrets.yml` is a git ignored file, you can store your secrets in it)
 6. Check the `bitrise.yml` file for any secret you should set in `.bitrise.secrets.yml`
@@ -27,8 +30,7 @@ An example `.bitrise.secrets.yml` file:
 
 ```
 envs:
-- A_SECRET_PARAM_ONE: the value for secret one
-- A_SECRET_PARAM_TWO: the value for secret two
+- CLIENT_ID: the client id for your GitHub app
 ```
 
 ## How to create your own step
