@@ -125,4 +125,4 @@ trigger_map:
   workflow: test-ci
 - push_branch: main
   type: push
-  workflow: test
+  workflow: test-ci
