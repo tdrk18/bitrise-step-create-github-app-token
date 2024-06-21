@@ -83,6 +83,7 @@ inputs:
       is_required: true
       is_sensitive: true
   - private_key_path:
+    opts:
       title: "Private key path"
       summary: "The local path for the private key of GitHub App"
       description: "Please download the private key before running this step"
