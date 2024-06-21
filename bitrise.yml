@@ -6,7 +6,7 @@ app:
   - BITRISE_STEP_ID: create-github-app-token
   - BITRISE_STEP_VERSION: 1.0.0
   - BITRISE_STEP_GIT_CLONE_URL: https://github.com/tdrk18/bitrise-step-create-github-app-token.git
-  - MY_STEPLIB_REPO_FORK_GIT_URL: $MY_STEPLIB_REPO_FORK_GIT_URL
+  - MY_STEPLIB_REPO_FORK_GIT_URL: https://github.com/tdrk18/bitrise-steplib
 workflows:
   audit-this-step:
     steps:
