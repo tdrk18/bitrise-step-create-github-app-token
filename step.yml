@@ -84,8 +84,8 @@ inputs:
       is_sensitive: true
   - private_key_path:
       title: "Private key path"
-      summary: " Path for private key of GitHub App"
-      description: "Please download private key before running this step"
+      summary: "The local path for the private key of GitHub App"
+      description: "Please download the private key before running this step"
       is_expand: true
       is_required: true
       is_sensitive: false
